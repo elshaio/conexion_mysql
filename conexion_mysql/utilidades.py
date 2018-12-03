@@ -30,3 +30,11 @@ def list_a_tupla(lista):
         tupla = tupla + (elemento,)
 
     return tupla
+
+
+def dict_a_tupla(diccionario, *args):
+    tupla = ()
+    for argumento in list(args):
+        tupla = tupla + (diccionario[argumento], )
+
+    return tupla

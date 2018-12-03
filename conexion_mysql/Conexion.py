@@ -20,7 +20,9 @@ class Conexion:
         return ManejadorConexion(host=self._host, user=self._user, password=self._password, database=self._database,
                                  port=self._port)
 
-    def insertar_varios(self, query, arreglo_tuplas, metodo=None):
+    def insertar_varios(self, query, arreglo_tuplas, **kwargs):
+        metodo = kwargs.get('metodo', None)
+
         manejador = self._conectar()
 
         metodo_str = ''
@@ -37,7 +39,9 @@ class Conexion:
         finally:
             manejador.cerrar()
 
-    def lanzar_orden(self, query, metodo=None):
+    def lanzar_orden(self, query, **kwargs):
+        metodo = kwargs.get('metodo', None)
+
         manejador = self._conectar()
 
         metodo_str = ''
@@ -118,7 +122,7 @@ class Conexion:
 
         try:
             with connection.cursor() as cursor:
-                sql = "SET @parerror = ''"
+                sql = "SET @parerror = '{}'".format(respuesta_esperada)
                 cursor.execute(sql)
                 cursor.execute(call_str)
                 sql = 'SELECT @parerror as parerror'
